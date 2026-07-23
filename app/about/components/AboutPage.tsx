@@ -1,0 +1,110 @@
+'use client';
+
+import { useState } from 'react';
+import {
+  Search, Bell, Menu, Shield, Cpu, Wifi, Github,
+} from 'lucide-react';
+import { Sidebar } from '@/components/Sidebar';
+import { AdminMenu } from '@/components/AdminMenu';
+import { ThemeToggle } from '@/components/ThemeToggle';
+
+const stack = [
+  'Next.js 13 (App Router)', 'TypeScript', 'Tailwind CSS', 'Supabase',
+  'Recharts', 'Radix UI', 'lucide-react',
+];
+
+const nodes = [
+  { name: 'Pi 5 (Controller)', role: 'Runs the core decision engine and dashboard API.' },
+  { name: 'Pi 3 (Scanner)', role: 'Continuously scans the network for new and existing devices.' },
+  { name: 'Pi Zero W (Portal)', role: 'Serves the captive portal for quarantined and guest devices.' },
+];
+
+export function AboutPage() {
+  const [collapsed, setCollapsed] = useState(false);
+
+  return (
+    <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-slate-950">
+      <Sidebar collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)} />
+
+      <div className="flex flex-1 flex-col overflow-hidden">
+        <header className="flex shrink-0 items-center justify-between border-b border-slate-200 bg-white px-5 py-3 dark:border-slate-800 dark:bg-slate-900">
+          <div className="flex items-center gap-3">
+            <button onClick={() => setCollapsed((v) => !v)} aria-label="Toggle sidebar" className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+              <Menu className="h-4 w-4 cursor-pointer" />
+            </button>
+            <h1 className="text-sm font-bold text-slate-700 dark:text-slate-200">About</h1>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="relative flex items-center">
+              <Search className="absolute left-2.5 h-3.5 w-3.5 text-slate-400" />
+              <input
+                placeholder="Search..."
+                className="h-8 w-48 rounded-lg border border-slate-200 bg-slate-50 pl-8 pr-3 text-xs text-slate-600 outline-none placeholder:text-slate-400 focus:border-blue-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+              />
+            </div>
+            <ThemeToggle />
+            <Bell className="h-5 w-5 text-slate-500 dark:text-slate-400" />
+            <AdminMenu />
+          </div>
+        </header>
+
+        <main className="flex-1 overflow-y-auto px-5 py-4">
+          <div className="mx-auto max-w-3xl space-y-4">
+            <div className="rounded-xl border border-slate-200 bg-white p-6 text-center dark:border-slate-800 dark:bg-slate-900">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600">
+                <Shield className="h-6 w-6 text-white" />
+              </div>
+              <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">
+                Intelligent Multi-Layer Network Defence System
+              </h2>
+              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Version 3.0 · MLaNDS</p>
+              <p className="mx-auto mt-3 max-w-xl text-xs text-slate-500 dark:text-slate-400">
+                A home and small-office network security console for reviewing device access requests,
+                monitoring connected devices, responding to alerts, and quarantining suspicious traffic
+                in real time.
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+              <div className="mb-3 flex items-center gap-2">
+                <Cpu className="h-4 w-4 text-blue-600" />
+                <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100">Built With</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {stack.map((s) => (
+                  <span key={s} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-medium text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+              <div className="mb-3 flex items-center gap-2">
+                <Wifi className="h-4 w-4 text-blue-600" />
+                <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100">Connected Nodes</h3>
+              </div>
+              <div className="space-y-3">
+                {nodes.map((n) => (
+                  <div key={n.name} className="flex items-start justify-between gap-3 border-b border-slate-50 pb-3 last:border-b-0 last:pb-0 dark:border-slate-800">
+                    <div>
+                      <p className="text-xs font-semibold text-slate-700 dark:text-slate-200">{n.name}</p>
+                      <p className="mt-0.5 text-[11px] text-slate-400">{n.role}</p>
+                    </div>
+                    <span className="shrink-0 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
+                      Online
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white p-4 text-xs font-medium text-slate-400 dark:border-slate-800 dark:bg-slate-900">
+              <Github className="h-4 w-4" /> MLaNDS · built for local network security monitoring
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+}
