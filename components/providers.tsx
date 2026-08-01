@@ -7,7 +7,7 @@ import { AuthGate } from '@/components/AuthGate';
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
       <AuthGate>
         <AppDataProvider>{children}</AppDataProvider>
       </AuthGate>
