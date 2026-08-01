@@ -2,10 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Light/dark mode transition animations (see components/ThemeToggle.tsx) */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 0.4s;
   animation-timing-function: ease-in-out;
+}
+
+/* When a "wipe" transition is in progress, disable the default crossfade so
+   only the manual circle clip-path animation (driven from ThemeToggle) shows. */
+.wipe-transition::view-transition-old(root),
+.wipe-transition::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Custom-styled range slider (used by the Risk Score Threshold control in Settings) */
+input[type='range'].styled-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(to right, #2563eb var(--slider-fill, 50%), #e2e8f0 var(--slider-fill, 50%));
+  outline: none;
+  cursor: pointer;
+}
+.dark input[type='range'].styled-slider {
+  background: linear-gradient(to right, #3b82f6 var(--slider-fill, 50%), #334155 var(--slider-fill, 50%));
+}
+input[type='range'].styled-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: #2563eb;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.dark input[type='range'].styled-slider::-webkit-slider-thumb {
+  background: #3b82f6;
+  border-color: #1e293b;
+}
+input[type='range'].styled-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: #2563eb;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.dark input[type='range'].styled-slider::-moz-range-thumb {
+  background: #3b82f6;
+  border-color: #1e293b;
+}
+input[type='range'].styled-slider::-moz-range-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: transparent;
+}
+input[type='range'].styled-slider:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 :root {

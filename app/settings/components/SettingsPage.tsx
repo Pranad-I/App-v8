@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import {
-  Search, Bell, Menu, Save, Wifi, Lock, UserCircle,
+  Search, Bell, Menu, Save, Wifi, Lock, UserCircle, Sparkles, Droplets, CircleDot,
 } from 'lucide-react';
 import { Sidebar } from '@/components/Sidebar';
 import { AdminMenu } from '@/components/AdminMenu';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { getThemeTransitionStyle, setThemeTransitionStyle, type ThemeTransitionStyle } from '@/lib/themeTransition';
 
 function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean) => void }) {
   return (
@@ -49,6 +50,17 @@ function Section({ icon: Icon, title, children }: { icon: React.ElementType; tit
 
 export function SettingsPage() {
   const [collapsed, setCollapsed] = useState(false);
+  const [transitionStyle, setTransitionStyle] = useState<ThemeTransitionStyle>('dissolve');
+
+  useEffect(() => {
+    setTransitionStyle(getThemeTransitionStyle());
+  }, []);
+
+  function handleTransitionChange(style: ThemeTransitionStyle) {
+    setTransitionStyle(style);
+    setThemeTransitionStyle(style);
+    toast.success(`Theme transition set to ${style === 'dissolve' ? 'Dissolve' : 'Wipe'}`);
+  }
 
   const [emailAlerts, setEmailAlerts] = useState(true);
   const [criticalSms, setCriticalSms] = useState(false);
@@ -99,6 +111,35 @@ export function SettingsPage() {
 
         <main className="flex-1 overflow-y-auto px-5 py-4">
           <div className="mx-auto max-w-3xl space-y-4">
+            <Section icon={Sparkles} title="Appearance">
+              <Row label="Theme transition animation" hint="How the app animates when switching between light and dark mode.">
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleTransitionChange('dissolve')}
+                    className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
+                      transitionStyle === 'dissolve'
+                        ? 'border-blue-600 bg-blue-600 text-white'
+                        : 'border-slate-200 bg-white text-slate-500 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-800'
+                    }`}
+                  >
+                    <Droplets className="h-3.5 w-3.5" /> Dissolve
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleTransitionChange('wipe')}
+                    className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
+                      transitionStyle === 'wipe'
+                        ? 'border-blue-600 bg-blue-600 text-white'
+                        : 'border-slate-200 bg-white text-slate-500 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-800'
+                    }`}
+                  >
+                    <CircleDot className="h-3.5 w-3.5" /> Wipe
+                  </button>
+                </div>
+              </Row>
+            </Section>
+
             <Section icon={Bell} title="Notifications">
               <Row label="Email alerts" hint="Get notified by email when new alerts are raised.">
                 <Toggle checked={emailAlerts} onChange={setEmailAlerts} />
@@ -117,8 +158,8 @@ export function SettingsPage() {
               </Row>
               <div className="py-3">
                 <div className="mb-2 flex items-center justify-between">
-                  <p className="text-xs font-medium text-slate-700">Risk score threshold</p>
-                  <span className="text-xs font-semibold text-blue-600">{riskThreshold}</span>
+                  <p className="text-xs font-medium text-slate-700 dark:text-slate-200">Risk score threshold</p>
+                  <span className="text-xs font-semibold text-blue-600 dark:text-blue-400">{riskThreshold}</span>
                 </div>
                 <input
                   type="range"
@@ -126,7 +167,8 @@ export function SettingsPage() {
                   max={100}
                   value={riskThreshold}
                   onChange={(e) => setRiskThreshold(Number(e.target.value))}
-                  className="w-full accent-blue-600"
+                  className="styled-slider w-full"
+                  style={{ '--slider-fill': `${riskThreshold}%` } as React.CSSProperties}
                   disabled={!autoQuarantine}
                 />
                 <p className="mt-1 text-[11px] text-slate-400">Devices scoring above this are quarantined automatically.</p>
