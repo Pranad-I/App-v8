@@ -57,7 +57,7 @@ export function AboutPage() {
               <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">
                 Intelligent Multi-Layer Network Defence System
               </h2>
-              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Version 3.0 · MLaNDS</p>
+              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Version 8.8 · MLaNDS</p>
               <p className="mx-auto mt-3 max-w-xl text-xs text-slate-500 dark:text-slate-400">
                 A home and small-office network security console for reviewing device access requests,
                 monitoring connected devices, responding to alerts, and quarantining suspicious traffic
