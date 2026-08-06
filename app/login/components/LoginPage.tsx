@@ -552,6 +552,23 @@ export function LoginPage() {
                       >
                         Forgot Password?
                       </button>
+                      <label className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        required
+                      />
+                      <span>
+                        I agree to the{" "}
+                        <a
+                          href="/terms-and-conditions.pdf"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline"
+                        >
+                          Terms & Conditions
+                        </a>
+                      </span>
+                    </label>
                     </div>
 
                     {/* Login button */}
