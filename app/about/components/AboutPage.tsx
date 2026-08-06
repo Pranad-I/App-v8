@@ -14,8 +14,7 @@ const stack = [
 ];
 
 const nodes = [
-  { name: 'Pi 5 (Controller)', role: 'Runs the core decision engine and dashboard API.' },
-  { name: 'Pi 3 (Scanner)', role: 'Continuously scans the network for new and existing devices.' },
+  { name: 'Pi 3 (Scanner, Controller)', role: 'Continuously scans the network for new and existing devices. Runs the core decision engine and dashboard API.' },
   { name: 'Pi Zero W (Portal)', role: 'Serves the captive portal for quarantined and guest devices.' },
 ];
 
