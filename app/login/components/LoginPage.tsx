@@ -627,7 +627,7 @@ export function LoginPage() {
 
             {/* Footer */}
             <footer className="mt-4 flex items-center justify-center gap-3 text-[13px] text-[#495768]">
-              <span>MLaNDS v8.8.2</span>
+              <span>MLaNDS v8.8.3</span>
               <span className="h-3 w-px bg-[#2a3a4e]" />
               <span className="text-[#475464]">Protecting your network, 24/7</span>
             </footer>
